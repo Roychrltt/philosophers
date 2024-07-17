@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:22:46 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/17 11:00:25 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/17 18:36:18 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,3 +43,18 @@ void	ft_putstr(const char *str)
 		i++;
 	write(1, str, i);
 }
+
+long long	get_timestamp(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
+void	ft_usleep()
+{
+
+}
+
+void	print_action(char *str, )

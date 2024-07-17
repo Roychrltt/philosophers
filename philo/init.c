@@ -6,30 +6,44 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:01:32 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/17 11:00:22 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/17 18:36:29 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_philo(t_params *params, int cur)
+static int	init_philo(t_params *params, int cur)
 {
-
+	params->philo[cur].pos = cur;
+	params->philo[cur].meal_count = 0;
+	params->philo[cur].dead = 0;
+	params->philo[cur].left_fork = 0;
+	params->philo[cur].right_fork = 0;
+	params->philo[cur].thread = 0;
+	params->philo[cur].params = *params;
 }
 
 int	create_philo(t_params *params)
 {
 	int	i;
 
+	params->philos = malloc(params->number_of_philos * sizeof (t_philo));
+	if (!params->philos)
+		return (0);
+	params->forks = malloc(params->number_of_philos
+			* sizeof (pthread_mutex_t));
+	if (!params->forks)
+	{
+		free(params->philos);
+		return (0);
+	}
 	i = 0;
 	while (i < params->number_of_philos)
 	{
-		params->philos[i].pos = i;
-		params->philos[i].meal_count = 0;
-		params->philos[i].dead = 0;
+		init_philo(params, i);
 		i++;
 	}
-
+	return (1);
 }
 
 int	init_param(t_params *params, int argc, char **argv)
@@ -52,15 +66,5 @@ int	init_param(t_params *params, int argc, char **argv)
 			|| params->time_to_eat < 0 || params->time_to_sleep < 0
 			|| (argc > 5 && params->meal_max < 0))
 		return (0);
-	params->philos = malloc(params->number_of_philos * sizeof (t_philo));
-	if (!params->philos)
-		return (0);
-	params->forks = malloc(params->number_of_philos
-			* sizeof (pthread_mutex_t));
-	if (!params->forks)
-	{
-		free(params->philos);
-		return (0);
-	}
 	return (1);
 }
