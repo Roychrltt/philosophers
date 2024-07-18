@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:22:46 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/18 15:18:43 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/18 17:23:09 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_putstr(const char *str)
 	write(1, str, i);
 }
 
-static long long	get_timestamp(t_params *params)
+long long	get_timestamp(t_params *params)
 {
 	struct timeval	tv;
 	long long		ts;

@@ -6,42 +6,46 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:01:32 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/18 15:38:32 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/18 21:39:16 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	init_philo(t_params *params, int cur)
+static int	init_philo(t_philo *philo, t_params *params, int cur)
 {
-	params->philo[cur].pos = cur;
-	params->philo[cur].meal_count = 0;
-	params->philo[cur].last_meal = 0;
-	params->philo[cur].dead = 0;
-	params->philo[cur].left_fork = 0;
-	params->philo[cur].right_fork = 0;
-	pthread_create(&params->philo[cur].thread, NULL, &life, &params->philos[cur]);
-	params->philo[cur].params = *params;
+	philo->pos = cur;
+	philo->meal_count = 0;
+	philo->last_meal = 0;
+	philo->left_fork = cur;
+	philo->right_fork = (cur + 1) % params->num;
+	philo->params = params;
+	if (pthread_create(&philo->thread, NULL, &life, philo))
+		return (0);
+	return (1);
 }
 
-int	create_philos_and_forks(t_params *params)
+int	create_philos_and_forks(t_params *params, t_philo *philos)
 {
 	int	i;
 
-	params->philos = malloc(params->number_of_philos * sizeof (t_philo));
-	if (!params->philos)
+	philos = malloc(params->num * sizeof (t_philo));
+	if (!philos)
 		return (0);
-	params->forks = malloc(params->number_of_philos
-			* sizeof (pthread_mutex_t));
+	params->forks = malloc(params->num * sizeof (pthread_mutex_t));
 	if (!params->forks)
 	{
-		free(params->philos);
+		free(philos);
 		return (0);
 	}
 	i = 0;
-	while (i < params->number_of_philos)
+	while (i < params->num)
 	{
-		init_philo(params, i);
+		if (!init_philo(&philos[cur], params, i))
+		{
+			return (0);
+		}
+		pthread_mutex_init(&params->fork[cur], NULL);
 		i++;
 	}
 	return (1);
@@ -62,18 +66,19 @@ void	init_param(t_params *params, int argc, char **argv)
 {
 	if (argc < 5 || argv > 6)
 		print_usage();
-	params->number_of_philos = ft_atoi(argv[1]);
+	params->num = ft_atoi(argv[1]);
 	params->time_to_die = ft_atoi(argv[2]);
 	params->time_to_eat = ft_atoi(argv[3]);
 	params->time_to_sleep = ft_atoi(argv[4]);
 	params->meal_max = -1;
-	params->any_dead = 0;
+	params->dead = 0;
 	if (argv > 5)
 		params->meal_max = ft_atoi(argv[5]);
-	if (params->number_of_philos < 0 || params->time_to_die < 0
+	if (params->num < 0 || params->time_to_die < 0
 			|| params->time_to_eat < 0 || params->time_to_sleep < 0
 			|| (argc > 5 && params->meal_max < 0))
 		print_usage();
 	gettimeofday(&params->start_time, NULL);
 	pthread_mutex_init(&params->print_mutex, NULL);
+	pthread_mutex_init(&params->check_dead, NULL);
 }
