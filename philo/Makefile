@@ -2,33 +2,36 @@ NAME = philo
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I.
 
-SRC = main.c 
+SRC = main.c init.c life.c utils.c
 
 OBJS = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "$(GREEN)Program$(RESET) $(CYAN)$(BOLD)$(NAME)$(RESET) $(GREEN)creating...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-	@echo "$(GREEN)Program$(RESET) $(CYAN)$(BOLD)$(BLINK)$(NAME)$(RESET) $(GREEN)created!$(RESET)"
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	printf "$(ERASE)$(GREEN)Program$(RESET) $(CYAN)$(BOLD)$(BLINK)$(NAME)$(RESET) $(GREEN)created!$(RESET)"
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
+	printf "$(ERASE)$(BLUE) > Compilation: $(RESET) $<"
 
 clean:
-	@rm -rf $(OBJS)
-	@echo "$(GREEN)Clean finished!$(RESET)"
+	printf "$(ERASE)$(GREEN)Cleaning up...$(RESET)"
+	rm -rf ${OBJ} ${OBJ_BONUS}
+	printf "$(ERASE)$(GREEN)Clean finished!\n$(RESET)"
 
 fclean: clean
-	@rm -rf $(NAME)
-	@echo "$(GREEN)Fclean finished!$(RESET)"
+	printf "$(GREEN)Fcleaning up...$(RESET)"
+	rm -rf ${NAME}
+	printf "$(ERASE)$(GREEN)Fclean finished!\n$(RESET)"
 
 re: fclean all
 
 .PHONY: $(NAME) all clean fclean re
+.SILENT:
 
 # COLORS
 RED = \033[31m
@@ -39,4 +42,5 @@ MAGENTA = \033[35m
 CYAN = \033[36m
 BOLD = \033[1m
 BLINK = \033[5m
+ERASE = \033[2K\r
 RESET = \033[0m

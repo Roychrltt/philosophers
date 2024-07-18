@@ -6,24 +6,40 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:15:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/17 18:36:21 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/18 17:01:08 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <limits.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <pthread.h>
+
+# define FORK_MSG	"has taken a fork"
+# define EAT_MSG	"is eating"
+# define THINK_MSG	"is thinking"
+# define SLEEP_MSG	"is sleeping"
+# define DEAD_MSG	"died"
+
+typedef enum e_state
+{
+	FORK,
+	EAT,
+	THINK,
+	SLEEP,
+	DEAD
+}	t_state;
 
 typedef struct	s_philo
 {
 	int				pos;
 	int				meal_count;
+	long long		last_meal;
 	int				dead;
 	int				left_fork;
 	int				right_fork;
@@ -38,18 +54,23 @@ typedef struct	s_params
 	int				time_to_sleep;
 	int				time_to_die;
 	int				meal_max;
-	int				dead;
-	long long		start_time;
+	int				any_dead;
+	struct timeval	start_time;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	print_mutex;
 }	t_params;
 
 // init
-int		init_params(t_params params);
-int		create_philos(t_params params);
+void	init_params(t_params *params, int argc, char **argv);
+int		create_philos_and_forks(t_params *params);
 
 // utils
 int		ft_atoi(const char* str);
 void	ft_putstr(const char *str);
+void	print_action(t_params *params, int pos, int status);
+
+// life
+
 
 #endif
