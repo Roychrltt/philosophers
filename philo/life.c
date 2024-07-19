@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:45:57 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/19 17:23:53 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/19 18:24:12 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	ft_eat(t_philo *philo)
 	if (philo->params->num == 1)
 	{
 		print_action(philo->params, 0, FORK);
-		usleep(1000 * philo->params->time_to_die);
+		usleep(1000 * philo->time_to_die);
+		print_action(philo->params, philo->pos, DEAD);
 		pthread_mutex_lock(&(philo->params->check_dead));
 		philo->params->dead = 1;
 		pthread_mutex_unlock(&(philo->params->check_dead));
-		print_action(philo->params, philo->pos, DEAD);
 		return ;
 	}
 	pthread_mutex_lock(&(philo->params->forks[philo->left_fork]));
@@ -30,7 +30,7 @@ void	ft_eat(t_philo *philo)
 	print_action(philo->params, philo->pos, FORK);
 	pthread_mutex_lock(&(philo->meal_mutex));
 	print_action(philo->params, philo->pos, EAT);
-	usleep(1000 * philo->params->time_to_eat);
+	usleep(1000 * philo->time_to_eat);
 	philo->last_meal = get_timestamp(philo->params);
 	pthread_mutex_unlock(&(philo->meal_mutex));
 	pthread_mutex_unlock(&(philo->params->forks[philo->left_fork]));
@@ -55,13 +55,15 @@ void	*life(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->pos % 2)
-		usleep(100);
-	while (!is_dead(philo))
+		usleep(1000);
+	while (1)
 	{
-		pthread_mutex_lock(&(philo->meal_mutex));
 		current = get_timestamp(philo->params);
-		if (current - philo->last_meal + philo->params->time_to_eat > philo->params->time_to_die)
+		pthread_mutex_lock(&(philo->meal_mutex));
+		if (current - philo->last_meal + philo->time_to_eat > philo->time_to_die)
 		{
+			write (1, "apres\n", 6);
+			usleep(1000 * (philo->last_meal - current + philo->time_to_eat));
 			print_action(philo->params, philo->pos, DEAD);
 			pthread_mutex_lock(&(philo->params->check_dead));
 			philo->params->dead = 1;
@@ -71,15 +73,14 @@ void	*life(void *arg)
 		}
 		pthread_mutex_unlock(&(philo->meal_mutex));
 		if (philo->meal_count >= philo->params->meal_max
-			&& philo->params->meal_max > 0)
+				&& philo->params->meal_max > 0)
 			break ;
 		ft_eat(philo);
-		if (!is_dead(philo))
-		{
-			print_action(philo->params, philo->pos, SLEEP);
-			usleep(1000 * philo->params->time_to_sleep);
-			print_action(philo->params, philo->pos, THINK);
-		}
+		if (is_dead(philo))
+			break ;
+		print_action(philo->params, philo->pos, SLEEP);
+		usleep(1000 * philo->params->time_to_sleep);
+		print_action(philo->params, philo->pos, THINK);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:15:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/19 16:12:24 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/19 18:07:16 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ typedef struct s_philo
 {
 	int				pos;
 	int				meal_count;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				time_to_die;
 	long long		last_meal;
 	int				left_fork;
 	int				right_fork;
