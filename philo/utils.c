@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:22:46 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/19 14:41:42 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/19 15:56:07 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ long long	get_timestamp(t_params *params)
 	long long		ts;
 
 	gettimeofday(&tv, NULL);
-	ts = (tv.tv_sec - params->start.tv_sec) * 1000
-		+ (tv.tv_usec - params->start.tv_usec) / 1000;
+	ts = (tv.tv_sec - params->start_time.tv_sec) * 1000
+		+ (tv.tv_usec - params->start_time.tv_usec) / 1000;
 	return (ts);
 }
 
@@ -71,9 +71,9 @@ void	print_action(t_params *params, int pos, int status)
 		msg = SLEEP_MSG;
 	else
 		msg = DEAD_MSG;
-	pthread_mutex_lock(&(patams->print_mutex));
+	pthread_mutex_lock(&(params->print_mutex));
 	printf("%08lld %d %s\n", timestamp, pos + 1, msg);
-	pthread_mutex_unlock(&(patams->print_mutex));
+	pthread_mutex_unlock(&(params->print_mutex));
 }
 
 void	wait_threads(t_params *params, t_philo *philos)
@@ -83,7 +83,7 @@ void	wait_threads(t_params *params, t_philo *philos)
 	i = 0;
 	while (i < params->num)
 	{
-		pthread_join(philos[i].thread, NULL)
+		pthread_join(philos[i].thread, NULL);
 		i++;
 	}
 }

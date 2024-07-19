@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:15:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/19 14:45:28 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/19 16:12:24 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,17 @@ typedef struct s_philo
 
 // init
 void		init_params(t_params *params, int argc, char **argv);
-int			create_philos_and_forks(t_params *params, t_philo *philos);
+int			create_philos_and_forks(t_params *params, t_philo **philos);
 
 // utils
 int			ft_atoi(const char *str);
 void		ft_putstr(const char *str);
 long long	get_timestamp(t_params *params);
 void		print_action(t_params *params, int pos, int status);
+void		wait_threads(t_params *params, t_philo *philos);
 
 // life
-void		ft_eat(t_params *params, t_philo *philo);
-void		life(void *arg);
+void		ft_eat(t_philo *philo);
+void		*life(void *arg);
 
 #endif

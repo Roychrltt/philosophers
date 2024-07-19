@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:01:32 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/19 14:36:24 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/19 16:11:28 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,23 @@ static int	init_philo(t_philo *philo, t_params *params, int cur)
 	return (1);
 }
 
-int	create_philos_and_forks(t_params *params, t_philo *philos)
+int	create_philos_and_forks(t_params *params, t_philo **philos)
 {
 	int	i;
 
-	philos = malloc(params->num * sizeof (t_philo));
-	if (!philos)
+	*philos = malloc(params->num * sizeof (t_philo));
+	if (!(*philos))
 		return (0);
 	params->forks = malloc(params->num * sizeof (pthread_mutex_t));
 	if (!params->forks)
 	{
-		free(philos);
+		free(*philos);
 		return (0);
 	}
 	i = 0;
 	while (i < params->num)
 	{
-		if (!init_philo(&philos[i], params, i))
+		if (!init_philo(&(*philos)[i], params, i))
 			return (0);
 		pthread_mutex_init(&(params->forks[i]), NULL);
 		i++;
@@ -61,7 +61,7 @@ static void	print_usage(void)
 	exit(EXIT_FAILURE);
 }
 
-void	init_param(t_params *params, int argc, char **argv)
+void	init_params(t_params *params, int argc, char **argv)
 {
 	if (argc < 5 || argc > 6)
 		print_usage();
