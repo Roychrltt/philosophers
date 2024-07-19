@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 20:14:01 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/19 16:12:04 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/19 16:28:24 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	pthread_create(&death_thread, NULL, death, philos);
 	wait_threads(&params, philos);
+	pthread_join(death_thread, NULL);
 	free_all(&params, philos);
 	return (0);
 }
