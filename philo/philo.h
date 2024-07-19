@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:15:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/19 14:19:16 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/19 14:45:28 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef enum e_state
 	DEAD
 }	t_state;
 
-typedef struct	s_params
+typedef struct s_params
 {
 	int				num;
 	int				time_to_eat;
@@ -49,7 +49,7 @@ typedef struct	s_params
 	pthread_mutex_t	check_dead;
 }	t_params;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int				pos;
 	int				meal_count;
@@ -58,7 +58,7 @@ typedef struct	s_philo
 	int				right_fork;
 	pthread_t		thread;
 	pthread_mutex_t	meal_mutex;
-	t_params 		*params;
+	t_params		*params;
 }	t_philo;
 
 // init
@@ -66,13 +66,13 @@ void		init_params(t_params *params, int argc, char **argv);
 int			create_philos_and_forks(t_params *params, t_philo *philos);
 
 // utils
-int			ft_atoi(const char* str);
+int			ft_atoi(const char *str);
 void		ft_putstr(const char *str);
 long long	get_timestamp(t_params *params);
 void		print_action(t_params *params, int pos, int status);
 
 // life
-void	ft_eat(t_params *params, t_philo *philo);
-void	life();
+void		ft_eat(t_params *params, t_philo *philo);
+void		life(void *arg);
 
 #endif

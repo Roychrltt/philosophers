@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 20:14:01 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/19 14:17:56 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/19 14:36:00 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	free_all(t_params *params, t_philo *philos)
 	free(params->forks);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_params	params;
 	t_philo		*philos;

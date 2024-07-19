@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:22:46 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/19 14:25:04 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/19 14:41:42 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ long long	get_timestamp(t_params *params)
 	long long		ts;
 
 	gettimeofday(&tv, NULL);
-	ts = (tv.tv_sec - params->start.tv_sec) * 1000 +
-		(tv.tv_usec - params->start.tv_usec) / 1000;
+	ts = (tv.tv_sec - params->start.tv_sec) * 1000
+		+ (tv.tv_usec - params->start.tv_usec) / 1000;
 	return (ts);
 }
 
@@ -84,6 +84,6 @@ void	wait_threads(t_params *params, t_philo *philos)
 	while (i < params->num)
 	{
 		pthread_join(philos[i].thread, NULL)
-			i++;
+		i++;
 	}
 }
