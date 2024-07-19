@@ -6,24 +6,24 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 20:14:01 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/18 21:51:58 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/19 14:17:56 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	free_all(t_params *params, t_philos *philos)
+static void	free_all(t_params *params, t_philo *philos)
 {
 	int	i;
 
 	i = 0;
 	while (i < params->num)
 	{
-		pthread_mutex_destroy(&params->forks[i]);
+		pthread_mutex_destroy(&(params->forks[i]));
 		i++;
 	}
-	pthread_mutex_destroy(&params->print_mutex);
-	pthread_mutex_destroy(&params->check_dead);
+	pthread_mutex_destroy(&(params->print_mutex));
+	pthread_mutex_destroy(&(params->check_dead));
 	free(philos);
 	free(params->forks);
 }
@@ -31,7 +31,7 @@ static void	free_all(t_params *params, t_philos *philos)
 int main(int argc, char **argv)
 {
 	t_params	params;
-	t_philos	*philos;
+	t_philo		*philos;
 
 	init_params(&params, argc, argv);
 	philos = NULL;

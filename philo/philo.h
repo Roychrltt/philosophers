@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:15:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/18 22:53:47 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/19 14:19:16 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ typedef struct	s_philo
 	int				left_fork;
 	int				right_fork;
 	pthread_t		thread;
+	pthread_mutex_t	meal_mutex;
 	t_params 		*params;
 }	t_philo;
 
 // init
 void		init_params(t_params *params, int argc, char **argv);
-int			create_philos_and_forks(t_params *params);
+int			create_philos_and_forks(t_params *params, t_philo *philos);
 
 // utils
 int			ft_atoi(const char* str);

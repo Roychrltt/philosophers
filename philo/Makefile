@@ -20,7 +20,7 @@ $(NAME): $(OBJS)
 
 clean:
 	printf "$(ERASE)$(GREEN)Cleaning up...$(RESET)"
-	rm -rf ${OBJ} ${OBJ_BONUS}
+	rm -rf ${OBJS}
 	printf "$(ERASE)$(GREEN)Clean finished!\n$(RESET)"
 
 fclean: clean

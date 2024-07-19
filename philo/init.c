@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:01:32 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/18 21:39:16 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/19 14:20:32 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static int	init_philo(t_philo *philo, t_params *params, int cur)
 	philo->left_fork = cur;
 	philo->right_fork = (cur + 1) % params->num;
 	philo->params = params;
-	if (pthread_create(&philo->thread, NULL, &life, philo))
+	pthread_mutex_init(&(philo->meal_mutex), NULL);
+	if (pthread_create(&(philo->thread), NULL, &life, philo))
 		return (0);
 	return (1);
 }
@@ -41,11 +42,9 @@ int	create_philos_and_forks(t_params *params, t_philo *philos)
 	i = 0;
 	while (i < params->num)
 	{
-		if (!init_philo(&philos[cur], params, i))
-		{
+		if (!init_philo(&philos[i], params, i))
 			return (0);
-		}
-		pthread_mutex_init(&params->fork[cur], NULL);
+		pthread_mutex_init(&(params->forks[i]), NULL);
 		i++;
 	}
 	return (1);
@@ -64,7 +63,7 @@ static void	print_usage(void)
 
 void	init_param(t_params *params, int argc, char **argv)
 {
-	if (argc < 5 || argv > 6)
+	if (argc < 5 || argc > 6)
 		print_usage();
 	params->num = ft_atoi(argv[1]);
 	params->time_to_die = ft_atoi(argv[2]);
@@ -72,13 +71,13 @@ void	init_param(t_params *params, int argc, char **argv)
 	params->time_to_sleep = ft_atoi(argv[4]);
 	params->meal_max = -1;
 	params->dead = 0;
-	if (argv > 5)
+	if (argc > 5)
 		params->meal_max = ft_atoi(argv[5]);
 	if (params->num < 0 || params->time_to_die < 0
 			|| params->time_to_eat < 0 || params->time_to_sleep < 0
 			|| (argc > 5 && params->meal_max < 0))
 		print_usage();
-	gettimeofday(&params->start_time, NULL);
-	pthread_mutex_init(&params->print_mutex, NULL);
-	pthread_mutex_init(&params->check_dead, NULL);
+	gettimeofday(&(params->start_time), NULL);
+	pthread_mutex_init(&(params->print_mutex), NULL);
+	pthread_mutex_init(&(params->check_dead), NULL);
 }
