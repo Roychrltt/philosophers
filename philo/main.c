@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 20:14:01 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/20 11:06:49 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/20 12:25:10 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	*death(void *arg)
 				return (NULL);
 			cur++;
 		}
-		usleep(100);
+		usleep(10000);
 	}
 	return (NULL);
 }

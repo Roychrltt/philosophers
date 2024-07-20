@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:45:57 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/20 10:50:02 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/20 11:39:43 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,17 @@ static int	is_dead(t_philo *philo)
 void	*life(void *arg)
 {
 	t_philo		*philo;
-	long long	current;
+//	long long	current;
 
 	philo = (t_philo *)arg;
 	if (philo->pos % 2)
 		usleep(1000);
-	while (1)
+	while (!is_dead(philo))
 	{
+		if (philo->meal_count >= philo->params->meal_max
+				&& philo->params->meal_max > 0)
+			break ;
+		/*
 		current = get_timestamp(philo->params);
 		pthread_mutex_lock(&(philo->meal_mutex));
 		if (current - philo->last_meal + philo->time_to_eat > philo->time_to_die)
@@ -71,12 +75,8 @@ void	*life(void *arg)
 			break ;
 		}
 		pthread_mutex_unlock(&(philo->meal_mutex));
-		if (philo->meal_count >= philo->params->meal_max
-				&& philo->params->meal_max > 0)
-			break ;
+		*/
 		ft_eat(philo);
-		if (is_dead(philo))
-			break ;
 		print_action(philo->params, philo->pos, SLEEP);
 		usleep(1000 * philo->params->time_to_sleep);
 		print_action(philo->params, philo->pos, THINK);
