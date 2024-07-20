@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:45:57 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/19 18:24:12 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/20 10:50:02 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	*life(void *arg)
 		pthread_mutex_lock(&(philo->meal_mutex));
 		if (current - philo->last_meal + philo->time_to_eat > philo->time_to_die)
 		{
-			write (1, "apres\n", 6);
 			usleep(1000 * (philo->last_meal - current + philo->time_to_eat));
 			print_action(philo->params, philo->pos, DEAD);
 			pthread_mutex_lock(&(philo->params->check_dead));
