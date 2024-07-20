@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:45:57 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/20 14:29:17 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/20 14:58:54 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	*life(void *arg)
 		ft_eat(philo);
 		print_action(philo->params, philo->pos, SLEEP);
 		usleep(1000 * philo->params->time_to_sleep);
-	//	if (is_dead(philo))
-	//		break ;
+		if (is_dead(philo))
+			break ;
 		print_action(philo->params, philo->pos, THINK);
 	}
 	return (NULL);

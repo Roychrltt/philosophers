@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:22:46 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/19 17:20:00 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/20 14:46:22 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	print_action(t_params *params, int pos, int status)
 		pthread_mutex_unlock(&(params->check_dead));
 		return ;
 	}
+	pthread_mutex_unlock(&(params->check_dead));
 	timestamp = get_timestamp(params);
 	if (status == FORK)
 		msg = FORK_MSG;
@@ -80,7 +81,6 @@ void	print_action(t_params *params, int pos, int status)
 	pthread_mutex_lock(&(params->print_mutex));
 	printf("%08lld %d %s\n", timestamp, pos + 1, msg);
 	pthread_mutex_unlock(&(params->print_mutex));
-	pthread_mutex_unlock(&(params->check_dead));
 }
 
 void	wait_threads(t_params *params, t_philo *philos)
