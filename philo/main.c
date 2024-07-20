@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 20:14:01 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/20 12:25:10 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/20 12:37:52 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,10 @@ static void	free_all(t_params *params, t_philo *philos)
 	free(params->forks);
 }
 
-static int	check_philos_all_alive(t_philo *philo, long long current)
+static int	check_philo_alive(t_philo *philo, long long current)
 {
-	int			dead_check;
 	long long	time_since_eat;
 
-	dead_check = 0;
 	pthread_mutex_lock(&(philo->meal_mutex));
 	time_since_eat = current - philo->last_meal;
 	pthread_mutex_unlock(&(philo->meal_mutex));
@@ -43,9 +41,9 @@ static int	check_philos_all_alive(t_philo *philo, long long current)
 		philo->params->dead = 1;
 		pthread_mutex_unlock(&(philo->params->check_dead));
 		print_action(philo->params, philo->pos, DEAD);
-		dead_check = 1;
+		return (1);
 	}
-	return (dead_check);
+	return (0);
 }
 
 static void	*death(void *arg)
@@ -61,11 +59,11 @@ static void	*death(void *arg)
 		cur = 0;
 		while (cur < params->num)
 		{
-			if (check_philos_all_alive(&(*philos)[cur], get_timestamp(params)))
-				return (NULL);
+			if (check_philo_alive(&(*philos)[cur], get_timestamp(params)))
+				break ;
 			cur++;
 		}
-		usleep(10000);
+		usleep(100);
 	}
 	return (NULL);
 }
