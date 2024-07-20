@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 20:14:01 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/20 14:23:59 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/20 16:29:51 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	check_philo_alive(t_philo *philo, long long current)
 	pthread_mutex_unlock(&(philo->meal_mutex));
 	if (time_since_eat > philo->time_to_die)
 	{
-		print_action(philo->params, philo->pos, DEAD);
+		print_action(philo->params, philo->pos, DEAD_MSG);
 		pthread_mutex_lock(&(philo->params->check_dead));
 		philo->params->dead = 1;
 		pthread_mutex_unlock(&(philo->params->check_dead));

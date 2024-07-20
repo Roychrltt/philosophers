@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:22:46 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/20 14:46:22 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/20 16:29:40 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,9 @@ long long	get_timestamp(t_params *params)
 	return (ts);
 }
 
-void	print_action(t_params *params, int pos, int status)
+void	print_action(t_params *params, int pos, char *msg)
 {
 	long long	timestamp;
-	char		*msg;
 
 	pthread_mutex_lock(&(params->check_dead));
 	if (params->dead)
@@ -68,16 +67,6 @@ void	print_action(t_params *params, int pos, int status)
 	}
 	pthread_mutex_unlock(&(params->check_dead));
 	timestamp = get_timestamp(params);
-	if (status == FORK)
-		msg = FORK_MSG;
-	else if (status == EAT)
-		msg = EAT_MSG;
-	else if (status == THINK)
-		msg = THINK_MSG;
-	else if (status == SLEEP)
-		msg = SLEEP_MSG;
-	else
-		msg = DEAD_MSG;
 	pthread_mutex_lock(&(params->print_mutex));
 	printf("%08lld %d %s\n", timestamp, pos + 1, msg);
 	pthread_mutex_unlock(&(params->print_mutex));

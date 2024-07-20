@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:45:57 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/20 14:58:54 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/20 16:32:06 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ void	ft_eat(t_philo *philo)
 {
 	if (philo->params->num == 1)
 	{
-		print_action(philo->params, 0, FORK);
+		print_action(philo->params, 0, FORK_MSG);
 		usleep(1000 * philo->time_to_die);
 		return ;
 	}
 	pthread_mutex_lock(&(philo->params->forks[philo->left_fork]));
-	print_action(philo->params, philo->pos, FORK);
+	print_action(philo->params, philo->pos, FORK_MSG);
 	pthread_mutex_lock(&(philo->params->forks[philo->right_fork]));
-	print_action(philo->params, philo->pos, FORK);
-	print_action(philo->params, philo->pos, EAT);
+	print_action(philo->params, philo->pos, FORK_MSG);
+	print_action(philo->params, philo->pos, EAT_MSG);
 	usleep(1000 * philo->time_to_eat);
 	pthread_mutex_unlock(&(philo->params->forks[philo->left_fork]));
 	pthread_mutex_unlock(&(philo->params->forks[philo->right_fork]));
@@ -57,11 +57,14 @@ void	*life(void *arg)
 			&& philo->params->meal_max > 0)
 			return (NULL);
 		ft_eat(philo);
-		print_action(philo->params, philo->pos, SLEEP);
+		if (philo->meal_count >= philo->params->meal_max
+			&& philo->params->meal_max > 0)
+			break ;
+		print_action(philo->params, philo->pos, SLEEP_MSG);
 		usleep(1000 * philo->params->time_to_sleep);
 		if (is_dead(philo))
 			break ;
-		print_action(philo->params, philo->pos, THINK);
+		print_action(philo->params, philo->pos, THINK_MSG);
 	}
 	return (NULL);
 }
