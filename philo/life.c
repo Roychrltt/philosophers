@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:45:57 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/20 12:44:29 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/20 14:26:16 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,13 @@ void	ft_eat(t_philo *philo)
 	print_action(philo->params, philo->pos, FORK);
 	pthread_mutex_lock(&(philo->params->forks[philo->right_fork]));
 	print_action(philo->params, philo->pos, FORK);
-	pthread_mutex_lock(&(philo->meal_mutex));
 	print_action(philo->params, philo->pos, EAT);
-	if (is_dead(philo))
-		return ;
 	usleep(1000 * philo->time_to_eat);
-	philo->last_meal = get_timestamp(philo->params);
-	pthread_mutex_unlock(&(philo->meal_mutex));
 	pthread_mutex_unlock(&(philo->params->forks[philo->left_fork]));
 	pthread_mutex_unlock(&(philo->params->forks[philo->right_fork]));
+	pthread_mutex_lock(&(philo->meal_mutex));
+	philo->last_meal = get_timestamp(philo->params);
+	pthread_mutex_unlock(&(philo->meal_mutex));
 	philo->meal_count++;
 }
 
@@ -52,12 +50,12 @@ void	*life(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->pos % 2)
-		usleep(1000);
+		usleep(100);
 	while (!is_dead(philo))
 	{
 		if (philo->meal_count >= philo->params->meal_max
-				&& philo->params->meal_max > 0)
-			break ;
+			&& philo->params->meal_max > 0)
+			return (NULL);
 		ft_eat(philo);
 		print_action(philo->params, philo->pos, SLEEP);
 		usleep(1000 * philo->params->time_to_sleep);
