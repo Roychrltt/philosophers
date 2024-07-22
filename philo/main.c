@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 20:14:01 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/22 10:40:47 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/22 16:27:56 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,15 @@ static void	free_all(t_params *params, t_philo **philos)
 	i = 0;
 	while (i < params->num)
 	{
+		pthread_join((*philos)[i].thread, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < params->num)
+	{
 		pthread_mutex_destroy(&(params->forks[i]));
 		pthread_mutex_destroy(&((*philos)[i].meal_mutex));
-		pthread_join((*philos)[i].thread, NULL);
+		pthread_mutex_destroy(&((*philos)[i].count_mutex));
 		i++;
 	}
 	pthread_mutex_destroy(&(params->print_mutex));
@@ -55,8 +61,13 @@ static int	check_max_meal(t_philo **philos)
 	i = 0;
 	while (i < (*philos)[0].params->num)
 	{
+		pthread_mutex_lock(&(*philos)[i].count_mutex);
 		if ((*philos)[i].meal_count < (*philos)[0].params->meal_max)
+		{
+			pthread_mutex_unlock(&(*philos)[i].count_mutex);
 			return (0);
+		}
+		pthread_mutex_unlock(&(*philos)[i].count_mutex);
 		i++;
 	}
 	return (1);
@@ -95,14 +106,12 @@ int	main(int argc, char **argv)
 {
 	t_params	params;
 	t_philo		*philos;
-	pthread_t	death_thread;
 
 	init_params(&params, argc, argv);
 	philos = NULL;
 	if (!create_philos_and_forks(&params, &philos))
 		return (EXIT_FAILURE);
-	pthread_create(&death_thread, NULL, death, &philos);
-	pthread_join(death_thread, NULL);
+	death(&philos);
 	free_all(&params, &philos);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:45:57 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/22 10:46:37 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/22 18:40:26 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ void	ft_eat(t_philo *philo)
 	pthread_mutex_lock(&(philo->params->forks[philo->right_fork]));
 	print_action(philo->params, philo->pos, FORK_MSG);
 	print_action(philo->params, philo->pos, EAT_MSG);
-	usleep(1000 * philo->time_to_eat);
-	pthread_mutex_unlock(&(philo->params->forks[philo->left_fork]));
-	pthread_mutex_unlock(&(philo->params->forks[philo->right_fork]));
 	pthread_mutex_lock(&(philo->meal_mutex));
 	philo->last_meal = get_timestamp(philo->params);
 	pthread_mutex_unlock(&(philo->meal_mutex));
+	usleep(1000 * philo->time_to_eat);
+	pthread_mutex_unlock(&(philo->params->forks[philo->right_fork]));
+	pthread_mutex_unlock(&(philo->params->forks[philo->left_fork]));
+	pthread_mutex_lock(&(philo->count_mutex));
 	philo->meal_count++;
+	pthread_mutex_unlock(&(philo->count_mutex));
 }
 
 void	*life(void *arg)
@@ -53,13 +55,15 @@ void	*life(void *arg)
 		usleep(1000);
 	while (!is_dead(philo))
 	{
-		if (philo->meal_count >= philo->params->meal_max
-			&& philo->params->meal_max > 0)
-			return (NULL);
 		ft_eat(philo);
+		pthread_mutex_lock(&(philo->count_mutex));
 		if ((philo->meal_count >= philo->params->meal_max
 				&& philo->params->meal_max > 0) || philo->params->num == 1)
+		{
+			pthread_mutex_unlock(&(philo->count_mutex));
 			break ;
+		}
+		pthread_mutex_unlock(&(philo->count_mutex));
 		usleep(100);
 		print_action(philo->params, philo->pos, SLEEP_MSG);
 		usleep(1000 * philo->params->time_to_sleep);

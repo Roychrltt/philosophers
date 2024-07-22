@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:15:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/22 10:40:43 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/22 18:01:08 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_philo
 	int				right_fork;
 	pthread_t		thread;
 	pthread_mutex_t	meal_mutex;
+	pthread_mutex_t	count_mutex;
 	t_params		*params;
 }	t_philo;
 
