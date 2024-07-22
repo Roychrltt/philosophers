@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:01:32 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/22 18:57:06 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/22 19:19:56 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ static int	init_philo(t_philo *philo, t_params *params, int cur)
 	philo->time_to_sleep = params->time_to_sleep;
 	philo->time_to_die = params->time_to_die;
 	philo->last_meal = 0;
-/*	if (cur != params->num - 1)
-	{
-		philo->right_fork = cur;
-		philo->left_fork = (cur + 1) % params->num;
-	}
-	else
-	{
-		philo->left_fork = cur;
-		philo->right_fork = (cur + 1) % params->num;
-	}*/
 	philo->right_fork = cur;
 	philo->left_fork = (cur + 1) % params->num;
 	philo->params = params;
