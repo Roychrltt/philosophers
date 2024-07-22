@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 20:14:01 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/20 16:29:51 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/22 10:40:47 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	*death(void *arg)
 		}
 		if (params->meal_max > 0 && check_max_meal(philos))
 			break ;
-		usleep(100);
+		usleep(50);
 	}
 	return (NULL);
 }
@@ -102,7 +102,6 @@ int	main(int argc, char **argv)
 	if (!create_philos_and_forks(&params, &philos))
 		return (EXIT_FAILURE);
 	pthread_create(&death_thread, NULL, death, &philos);
-	wait_threads(&params, philos);
 	pthread_join(death_thread, NULL);
 	free_all(&params, &philos);
 	return (0);

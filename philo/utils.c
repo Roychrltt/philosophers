@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:22:46 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/20 16:29:40 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/22 10:40:35 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,4 @@ void	print_action(t_params *params, int pos, char *msg)
 	pthread_mutex_lock(&(params->print_mutex));
 	printf("%08lld %d %s\n", timestamp, pos + 1, msg);
 	pthread_mutex_unlock(&(params->print_mutex));
-}
-
-void	wait_threads(t_params *params, t_philo *philos)
-{
-	int	i;
-
-	i = 0;
-	while (i < params->num)
-	{
-		pthread_join(philos[i].thread, NULL);
-		i++;
-	}
 }

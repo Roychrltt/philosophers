@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:45:57 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/20 16:32:06 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/22 10:46:37 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,19 @@ void	*life(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->pos % 2)
-		usleep(100);
+		usleep(1000);
 	while (!is_dead(philo))
 	{
 		if (philo->meal_count >= philo->params->meal_max
 			&& philo->params->meal_max > 0)
 			return (NULL);
 		ft_eat(philo);
-		if (philo->meal_count >= philo->params->meal_max
-			&& philo->params->meal_max > 0)
+		if ((philo->meal_count >= philo->params->meal_max
+				&& philo->params->meal_max > 0) || philo->params->num == 1)
 			break ;
+		usleep(100);
 		print_action(philo->params, philo->pos, SLEEP_MSG);
 		usleep(1000 * philo->params->time_to_sleep);
-		if (is_dead(philo))
-			break ;
 		print_action(philo->params, philo->pos, THINK_MSG);
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:15:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/20 16:30:01 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/22 10:40:43 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int			ft_atoi(const char *str);
 void		ft_putstr(const char *str);
 long long	get_timestamp(t_params *params);
 void		print_action(t_params *params, int pos, char *msg);
-void		wait_threads(t_params *params, t_philo *philos);
 
 // life
 void		ft_eat(t_philo *philo);
