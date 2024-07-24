@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:45:57 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/22 18:40:26 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/24 10:23:15 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,3 +71,11 @@ void	*life(void *arg)
 	}
 	return (NULL);
 }
+/*
+if (pthread_mutex_trylock(&(params->forks[i])) == 0) {
+			pthread_mutex_unlock(&(params->forks[i]));
+		} else {
+			printf("Fork %d is still locked at the end!\n", i);
+		}
+		pthread_mutex_destroy(&(params->forks[i]));
+*/
