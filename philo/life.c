@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:45:57 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/24 10:23:15 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/24 20:03:25 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	*life(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->pos % 2)
 		usleep(1000);
+	pthread_mutex_lock(&(philo->params->print_mutex));
+	pthread_mutex_unlock(&(philo->params->print_mutex));
 	while (!is_dead(philo))
 	{
 		ft_eat(philo);

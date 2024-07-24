@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:01:32 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/24 09:48:02 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/24 20:01:59 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ static int	init_philo(t_philo *philo, t_params *params, int cur)
 	pthread_mutex_init(&(philo->meal_mutex), NULL);
 	pthread_mutex_init(&(philo->count_mutex), NULL);
 	if (pthread_create(&(philo->thread), NULL, &life, philo))
-	{
-		pthread_mutex_destroy(&(philo->meal_mutex));
 		return (0);
-	}
 	return (1);
 }
 
@@ -47,6 +44,7 @@ int	create_philos_and_forks(t_params *params, t_philo **philos)
 		return (0);
 	}
 	i = 0;
+	pthread_mutex_lock(&(params->print_mutex));
 	while (i < params->num)
 	{
 		if (!init_philo(&(*philos)[i], params, i))
@@ -58,6 +56,7 @@ int	create_philos_and_forks(t_params *params, t_philo **philos)
 		pthread_mutex_init(&(params->forks[i]), NULL);
 		i++;
 	}
+	pthread_mutex_unlock(&(params->print_mutex));
 	return (1);
 }
 
