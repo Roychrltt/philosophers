@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:15:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/22 18:01:08 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/25 20:58:39 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ long long	get_timestamp(t_params *params);
 void		print_action(t_params *params, int pos, char *msg);
 
 // life
-void		ft_eat(t_philo *philo);
 void		*life(void *arg);
 
 #endif

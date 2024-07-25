@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:45:57 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/25 12:37:31 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/25 20:58:23 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	is_dead(t_philo *philo)
 	return (is_dead);
 }
 
-void	ft_eat(t_philo *philo)
+static void	ft_eat(t_philo *philo)
 {
 	if (philo->params->num == 1)
 	{
