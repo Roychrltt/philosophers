@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:45:57 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/24 20:03:25 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/25 12:37:31 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ void	*life(void *arg)
 	t_philo		*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->pos % 2)
-		usleep(1000);
 	pthread_mutex_lock(&(philo->params->print_mutex));
 	pthread_mutex_unlock(&(philo->params->print_mutex));
+	if (philo->pos % 2)
+	usleep(1000);
 	while (!is_dead(philo))
 	{
 		ft_eat(philo);
@@ -73,11 +73,3 @@ void	*life(void *arg)
 	}
 	return (NULL);
 }
-/*
-if (pthread_mutex_trylock(&(params->forks[i])) == 0) {
-			pthread_mutex_unlock(&(params->forks[i]));
-		} else {
-			printf("Fork %d is still locked at the end!\n", i);
-		}
-		pthread_mutex_destroy(&(params->forks[i]));
-*/

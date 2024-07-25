@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:01:32 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/24 20:01:59 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/07/25 12:36:17 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	create_philos_and_forks(t_params *params, t_philo **philos)
 		free(*philos);
 		return (0);
 	}
-	i = 0;
+	i = -1;
 	pthread_mutex_lock(&(params->print_mutex));
-	while (i < params->num)
+	while (++i < params->num)
 	{
 		if (!init_philo(&(*philos)[i], params, i))
 		{
@@ -54,7 +54,6 @@ int	create_philos_and_forks(t_params *params, t_philo **philos)
 			return (0);
 		}
 		pthread_mutex_init(&(params->forks[i]), NULL);
-		i++;
 	}
 	pthread_mutex_unlock(&(params->print_mutex));
 	return (1);
