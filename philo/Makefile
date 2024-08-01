@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/08/01 19:13:25 by xiaxu             #+#    #+#              #
+#    Updated: 2024/08/01 19:13:47 by xiaxu            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = philo
 
 CC = cc
@@ -21,10 +33,10 @@ $(NAME): $(OBJS)
 clean:
 	printf "$(ERASE)$(GREEN)Cleaning up...$(RESET)"
 	rm -rf ${OBJS}
-	printf "$(ERASE)$(GREEN)Clean finished!\n$(RESET)"
+	printf "$(ERASE)$(GREEN)Clean finished!$(RESET)"
 
 fclean: clean
-	printf "$(GREEN)Fcleaning up...$(RESET)"
+	printf "$(ERASE)$(GREEN)Fcleaning up...$(RESET)"
 	rm -rf ${NAME}
 	printf "$(ERASE)$(GREEN)Fclean finished!\n$(RESET)"
 
