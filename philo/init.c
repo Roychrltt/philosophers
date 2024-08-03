@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 12:01:32 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/07/25 12:36:17 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/03 10:36:27 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void	init_params(t_params *params, int argc, char **argv)
 	params->dead = 0;
 	if (argc > 5)
 		params->meal_max = ft_atoi(argv[5]);
-	if (params->num < 0 || params->time_to_die < 0
-		|| params->time_to_eat < 0 || params->time_to_sleep < 0
-		|| (argc > 5 && params->meal_max < 0))
+	if (params->num <= 0 || params->time_to_die <= 0
+		|| params->time_to_eat <= 0 || params->time_to_sleep <= 0
+		|| (argc > 5 && params->meal_max <= 0))
 		print_usage();
 	gettimeofday(&(params->start_time), NULL);
 	pthread_mutex_init(&(params->print_mutex), NULL);
